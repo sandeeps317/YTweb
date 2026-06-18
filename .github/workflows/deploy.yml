@@ -1,0 +1,60 @@
+name: Deploy page
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type-check
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish to gh-pages branch
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin gh-pages --depth=1 || true
+          rm -rf .pages-worktree
+          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+            git worktree add .pages-worktree origin/gh-pages
+          else
+            git worktree add --detach .pages-worktree
+          fi
+          find .pages-worktree -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R dist/. .pages-worktree/
+          touch .pages-worktree/.nojekyll
+          cd .pages-worktree
+          git add --all
+          if git diff --cached --quiet; then
+            echo "No changes to publish."
+          else
+            git commit -m "Deploy GitHub Pages"
+            git push origin HEAD:gh-pages
+          fi
