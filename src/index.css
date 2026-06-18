@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  --theme-bg-main: #0f0f0f;
+  --theme-bg-card: #1f1f1f;
+  --theme-bg-input: #121212;
+  --theme-border: #2d2d2d;
+  --theme-primary: #ff0000;
+  --theme-primary-hover: #cc0000;
+  --theme-accent: #ff0000;
+  --theme-glow: rgba(255, 0, 0, 0.1);
+  --theme-text: #f1f5f9;
+}
+
+[data-theme="youtube"] {
+  --theme-bg-main: #0f0f0f;
+  --theme-bg-card: #1f1f1f;
+  --theme-bg-input: #121212;
+  --theme-border: #2d2d2d;
+  --theme-primary: #ff0000;
+  --theme-primary-hover: #cc0000;
+  --theme-accent: #ff0000;
+  --theme-glow: rgba(255, 0, 0, 0.1);
+  --theme-text: #f1f5f9;
+}
+
+[data-theme="legacy"] {
+  --theme-bg-main: #f0f0f2;
+  --theme-bg-card: #ffffff;
+  --theme-bg-input: #ffffff;
+  --theme-border: #d4d4d8;
+  --theme-primary: #e52d27;
+  --theme-primary-hover: #b31217;
+  --theme-accent: #e52d27;
+  --theme-glow: rgba(0, 0, 0, 0.05);
+  --theme-text: #1b1b1f;
+}
+
+/* Custom styles for older browsers and custom scrollbars */
+html, body {
+  background-color: var(--theme-bg-main);
+  color: var(--theme-text, #f1f5f9);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--theme-bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--theme-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-primary-hover);
+}
+
+/* Skeleton animation for older Safari fallback */
+@keyframes skeleton-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-pulse {
+  background: linear-gradient(90deg, var(--theme-bg-main) 25%, var(--theme-bg-card) 50%, var(--theme-bg-main) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 2s infinite linear;
+}
+
+/* Custom theme helper utility classes for easy layout-wide adaptation */
+.hs-bg-main { background-color: var(--theme-bg-main) ; }
+.hs-bg-card { background-color: var(--theme-bg-card) ; }
+.hs-bg-input { background-color: var(--theme-bg-input) ; }
+.hs-border { border-color: var(--theme-border) ; }
+.hs-bg-primary { background-color: var(--theme-primary) ; }
+.hs-bg-primary-hover:hover { background-color: var(--theme-primary-hover) ; }
+.hs-text-primary { color: var(--theme-primary) ; }
+.hs-text-accent { color: var(--theme-accent) ; }
+.hs-border-primary { border-color: var(--theme-primary) ; }
+.hs-focus-border:focus-within { border-color: var(--theme-accent) ; }
+.shadow-theme { box-shadow: 0 10px 15px -3px var(--theme-glow), 0 4px 6px -4px var(--theme-glow) ; }
+

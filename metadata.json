@@ -1,0 +1,6 @@
+{
+  "name": "YTWeb",
+  "description": "Lightweight YouTube browser and player optimized for legacy iOS, Android, and low-RAM devices.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

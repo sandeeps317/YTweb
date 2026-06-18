@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>YTWeb — Lightweight YouTube Canvas</title>
+    
+    <!-- PWA Manifest & App Info -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#020617" />
+    <meta name="description" content="Ultra-efficient lightweight YouTube browser and container player" />
+    
+    <!-- iOS 10 Safari & Standalone Device Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="YTWeb" />
+    <link rel="apple-touch-icon" href="https://api.dicebear.com/7.x/shapes/svg?seed=YTWeb&backgroundColor=0f172a" />
+    
+    <!-- CSS Fonts fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-slate-950 text-slate-100 overflow-x-hidden select-none">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Safe service worker bootstrapper -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js').then(function(registration) {
+            console.log('YTWeb client ServiceWorker successfully deployed with scope:', registration.scope);
+            // Request cache update check immediately for developers
+            registration.update();
+          }, function(err) {
+            console.error('ServiceWorker deployment failed:', err);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
+

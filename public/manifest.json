@@ -1,0 +1,18 @@
+{
+  "short_name": "YTWeb",
+  "name": "YTWeb",
+  "description": "Lightweight, ultra-efficient YouTube browsing & playback client optimized for legacy and low-RAM devices.",
+  "icons": [
+    {
+      "src": "https://api.dicebear.com/7.x/shapes/svg?seed=YTWeb&backgroundColor=0f172a",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "display": "standalone",
+  "orientation": "any"
+}
