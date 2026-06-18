@@ -1,4 +1,4 @@
-var CACHE_NAME = 'ytweb-v1';
+var CACHE_NAME = 'ytweb-v2';
 var urlsToCache = [
   '/',
   '/index.html',
@@ -36,6 +36,12 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('fetch', function(event) {
   // Only cache GET requests and skip hot-reload or chrome/safari extensions
   if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
+    return;
+  }
+
+  var requestUrl = new URL(event.request.url);
+  if (requestUrl.pathname.startsWith('/api/')) {
+    event.respondWith(fetch(event.request));
     return;
   }
 
