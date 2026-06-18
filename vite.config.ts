@@ -7,6 +7,11 @@ export default defineConfig(() => {
   return {
     base: './',
     plugins: [react(), tailwindcss()],
+    build: {
+      target: 'es2015',
+      cssTarget: 'safari10',
+      modulePreload: false,
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

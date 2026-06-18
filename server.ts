@@ -11,6 +11,13 @@ const PORT = 3000;
 
 app.use(express.json());
 
+app.use("/api", (_req, res, next) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  next();
+});
+
 // Initialize Google GenAI if API key available
 let ai: GoogleGenAI | null = null;
 if (process.env.GEMINI_API_KEY) {
