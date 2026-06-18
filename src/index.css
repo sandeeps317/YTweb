@@ -92,3 +92,101 @@ html, body {
 .hs-focus-border:focus-within { border-color: var(--theme-accent) ; }
 .shadow-theme { box-shadow: 0 10px 15px -3px var(--theme-glow), 0 4px 6px -4px var(--theme-glow) ; }
 
+
+/* iOS 10 Safari fallback UI. Avoids modern grid/flex-heavy Tailwind layouts. */
+.legacy-page {
+  min-height: 100vh;
+  background: #0f0f0f;
+  color: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.legacy-header {
+  display: block;
+  border-bottom: 1px solid #333;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+.legacy-brand {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.legacy-search input {
+  width: 62%;
+  max-width: 420px;
+  font-size: 18px;
+  padding: 10px;
+  border: 1px solid #666;
+  border-radius: 4px;
+  color: #111;
+  background: #fff;
+}
+.legacy-search button,
+.legacy-suggestions button,
+.legacy-card button {
+  font-size: 17px;
+  padding: 10px 14px;
+  margin: 4px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background: #e5e5e5;
+  color: #111;
+}
+.legacy-main,
+.legacy-panel,
+.legacy-player,
+.legacy-results {
+  display: block;
+  width: 100%;
+  clear: both;
+}
+.legacy-panel,
+.legacy-player,
+.legacy-card {
+  background: #181818;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.legacy-player iframe {
+  width: 100%;
+  height: 360px;
+  border: 0;
+  background: #000;
+}
+.legacy-card {
+  float: left;
+  width: 46%;
+  min-height: 260px;
+  margin-right: 2%;
+}
+.legacy-card button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  background: transparent;
+  color: #eee;
+  border: 0;
+}
+.legacy-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 8px;
+}
+.legacy-card span {
+  display: block;
+  color: #bbb;
+  font-size: 14px;
+  margin-top: 4px;
+}
+.legacy-card-title {
+  color: #fff !important;
+  font-size: 17px !important;
+  font-weight: bold;
+}

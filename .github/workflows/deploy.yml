@@ -5,6 +5,10 @@ on:
     branches:
       - main
       - master
+  pull_request:
+    branches:
+      - main
+      - master
   workflow_dispatch:
 
 permissions:
@@ -35,17 +39,20 @@ jobs:
         run: npm run lint
 
       - name: Configure GitHub Pages
+        if: github.event_name == 'push'
         uses: actions/configure-pages@v5
 
       - name: Build
         run: npm run build
 
       - name: Upload Pages artifact
+        if: github.event_name == 'push'
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
   deploy:
+    if: github.event_name == 'push'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

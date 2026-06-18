@@ -107,6 +107,48 @@ export default function App() {
     "coding study chill room synth"
   ];
 
+  const clientFallbackVideos: Video[] = [
+    {
+      id: "jfKfPfyJRdk",
+      title: "Lofi Hip Hop Radio 📚 - Beats to relax/study to",
+      channelName: "Lofi Girl",
+      channelId: "UCocg_S_MO7Geq17g",
+      publishedAt: "LIVE NOW",
+      duration: "LIVE",
+      views: "45K watching",
+      thumbnailUrl: "https://img.youtube.com/vi/jfKfPfyJRdk/hqdefault.jpg",
+      isLive: true,
+      isShort: false,
+      description: "Relaxing beats ideal for work, study, or chill sessions."
+    },
+    {
+      id: "4xDzrJKXOOY",
+      title: "SYNTHWAVE radio 🌌 - retro cyberpunk beats to cruise/code to",
+      channelName: "Lofi Girl Synthwave",
+      channelId: "UCocg_S_MO7Geq17g",
+      publishedAt: "LIVE NOW",
+      duration: "LIVE",
+      views: "5.4K watching",
+      thumbnailUrl: "https://img.youtube.com/vi/4xDzrJKXOOY/hqdefault.jpg",
+      isLive: true,
+      isShort: false,
+      description: "Immersive synthwave radio for programmers and night drivers."
+    },
+    {
+      id: "dQw4w9WgXcQ",
+      title: "Rick Astley - Never Gonna Give You Up (Official Music Video)",
+      channelName: "Rick Astley",
+      channelId: "UCuAXFkgcl1yWXWcOD56qy_Q",
+      publishedAt: "16 years ago",
+      duration: "3:33",
+      views: "1.5B views",
+      thumbnailUrl: "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+      isLive: false,
+      isShort: false,
+      description: "The official video for Never Gonna Give You Up by Rick Astley."
+    }
+  ];
+
   // Mock static Subscribed channel lists matching real YouTube content creators
   const initialSubscriptions = [
     { id: "UCocg_S_MO7Geq17g", name: "Lofi Girl", avatar: "https://api.dicebear.com/7.x/initials/svg?seed=Lofi%20Girl&backgroundColor=1e1b4b,311042" },
@@ -164,10 +206,17 @@ export default function App() {
         const res = await fetch(`/api/suggestions?q=${encodeURIComponent(queryTerm)}`);
         if (res.ok) {
           const data = await res.json();
-          setSuggestions(data || []);
+          setSuggestions(Array.isArray(data) ? data : []);
+        } else {
+          setSuggestions(autocompleteSuggestions.filter(s =>
+            s.toLowerCase().includes(queryTerm.toLowerCase())
+          ));
         }
       } catch (err) {
         console.error("Failing fetching API suggestions fallback:", err);
+        setSuggestions(autocompleteSuggestions.filter(s =>
+          s.toLowerCase().includes(queryTerm.toLowerCase())
+        ));
       }
     }, 150);
 
@@ -230,9 +279,15 @@ export default function App() {
       const response = await fetch(url);
       if (!response.ok) throw new Error("Search service offline");
       const data = await response.json();
-      setSearchResults(data);
+      if (Array.isArray(data) && data.length > 0) {
+        setSearchResults(data);
+      } else {
+        console.warn("Search API returned an empty or invalid payload; using client fallback feed.");
+        setSearchResults(clientFallbackVideos);
+      }
     } catch (error) {
       console.error("Search failed:", error);
+      setSearchResults(clientFallbackVideos);
     } finally {
       setIsSearchSearching(false);
     }
